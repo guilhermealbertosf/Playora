@@ -19,6 +19,20 @@
 
 *{
     font-family: Arial, Helvetica, sans-serif;
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    scroll-behavior: smooth;
+}
+
+@keyframes piscar {
+    0% { background-color: #3622d3; }
+    50% { background-color: #3626A7; } /* Aumenta 10% no meio */
+    100% { background-color: #3523bd; }
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 .butcherman-regular {
@@ -34,25 +48,46 @@ body{
 
 header{
     text-align: center;
+
 }
-h1{
+#titulo{
     color: var(--cortitulo);
     font: bold 40pt arial;
-    font-family: cursive, Arial, Helvetica, sans-serif;
-    height: 60vh;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 65vh;
 
     display: flex;
     justify-content: center;
     align-items: center;
+    background: #000 url('../imagens/Logo.png');
+
 }
-h2{
+#subtitulo{
     color: var(--corsubtitulo);
     background-color: var(--corcorpo);
     padding: 30px 0;
-        
+    height: 23vh;
+    animation-duration: 1s;
 }
+#subtitulo p{
+    font: bold 18pt arial;
+    margin-top: 10px;
+    padding: 2px;
+}
+#subtitulo p:hover{
+    font: bold 19pt verdana;
+    margin-top: 10px;
+    transition-duration: 2s;
+    background-color: var(--subtitulo);
+    color: var(--corcorpo);
+}
+
 main{
     color: var(--corcorpo);
+    padding: 10px;
+    animation: piscar 4s infinite;
+    transition-duration: 2s;
+
 }
 section#conteiner-jogos{
     display: flex;
@@ -60,8 +95,8 @@ section#conteiner-jogos{
     justify-content: space-evenly;
     align-items: start;    
 
-    background-color: var(--conteiner);
     padding: 5px;
+    background-color: var(--conteiner);
 }
 
 div.jogos{
@@ -76,8 +111,10 @@ div.jogos:hover{
     background-color: var(--caixa-destaque);
     font-weight: bolder;
     border-radius: 40px;
-    transition-duration: .8s;
+    transition: .8s;
+    font-size: 18pt;
 }
+
 div.jogos a{
     text-decoration: none;
     color: var(--corcorpo);
@@ -86,3 +123,25 @@ div.jogos img{
     max-width: 100%;
     border-radius: 20px;
 }
+
+
+.botao-voltar-inicio{
+    display: block;
+    width: 200px;
+    background-color: var(--caixa-destaque);
+    color: #eaeaea;
+    text-align: center;
+    margin: auto;
+    padding: 10px;
+    border-radius: 30px;
+}
+.botao-voltar-inicio:hover{
+    font-size: 16pt;
+    transition-duration: 2s;
+}
+
+
+footer{
+    text-align: right;
+}
+

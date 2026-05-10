@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jogos G3</title>
+    <title>Playora | Plataforma de jogos online</title>
     <link rel="stylesheet" href="estilos/style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="shortcut icon" href="imagens/Logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
 </head>
 <body>
     <header>
-        <h1>Playora</h1>
-        <h2 data-aos="fade-up">Desfrute de jogos leves e divertidos!</h2>
+        <h1 id="titulo">Playora</h1>
+        <div  onclick="irPara('conteiner-jogos')" id="subtitulo" data-aos="fade-up">
+            <p id="p1" class="animate__animated animate__tada">Jogos</p>
+            <p id="p2" class="animate__animated animate__bounceInDown">Diversão</p>
+            <p id="p3" class="animate__animated animate__bounceInDown">Sem limites</p>
+        </div>
     </header>
     <main>
        <section id="conteiner-jogos">
@@ -31,15 +36,20 @@
             </div>
 
             <div onclick="aviso('dev')" id="" class="jogos" data-aos="fade-up">
-                    <a href="#">
+                    <a href="#conteiner-jogos">
                         <p>Cobrinha</p>
                         <img src="https://imagepng.org/wp-content/uploads/2017/10/quadrado-preto.png" alt="imagem">
                     </a>
             </div>
             
        </section> 
+       <a href="#titulo" class="botao-voltar-inicio">Voltar ao inicio</a>
+       
     </main>
-
+    
+    <footer>
+        &copy; Todos os direitos reservados
+    </footer>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
 </body>

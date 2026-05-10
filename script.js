@@ -9,3 +9,9 @@ function aviso(x){
         alert("erro")
     }
 }
+
+function irPara(secao) {
+      document.getElementById(secao).scrollIntoView({
+        behavior: "smooth"
+      });
+    }

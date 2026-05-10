@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Core: Unknown</title>
+
+<style>
+body {
+  margin: 0;
+  background: radial-gradient(circle, #0a0a0a, #000);
+  color: #e0e0e0;
+  font-family: 'Courier New', monospace;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+#game {
+  width: 90%;
+  max-width: 650px;
+  margin: 40px 0;
+  animation: fadeIn 1s;
+}
+
+a.botao-voltar{
+      text-decoration: none;
+      color: red;
+      margin-right: -90%;
+    }
+a.botao-voltar:hover{
+  background-color: #ff2200a4;
+  color: #000;
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 10px;
+  transition-duration: 10s;
+}
+
+#text {
+  min-height: 120px;
+  white-space: pre-line;
+  margin-bottom: 20px;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+button {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  padding: 12px;
+  background: #111;
+  border: 1px solid #444;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #222;
+}
+
+.fade {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+.glitch {
+  animation: glitch 0.2s;
+}
+
+@keyframes glitch {
+  0% {transform: translate(0);}
+  25% {transform: translate(-2px, 2px);}
+  50% {transform: translate(2px, -2px);}
+  75% {transform: translate(-2px, -2px);}
+  100% {transform: translate(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div id="game">
+  <a class="botao-voltar" href="../index.html">voltar</a>
+  <div id="text"></div>
+  <div id="choices"></div>
+</div>
+
+<script>
+const textEl = document.getElementById("text");
+const choicesEl = document.getElementById("choices");
+
+let scene = "start";
+let logica = 0;
+let emocao = 0;
+let instinto = 0;
+
+const scenes = {
+
+start: {
+text: "...\n\nInicializando sistema...\n\nConsciência detectada.\n\nVocê abre os olhos.\n\nLuz branca.\nSilêncio.\n\nVocê não lembra de nada.",
+choices: [
+  { text: "Onde eu estou?", next: "lab", type: "logica" },
+  { text: "Quem sou eu?", next: "identity", type: "emocao" },
+  { text: "Ficar em silêncio", next: "silence", type: "instinto" }
+]
+},
+
+lab: {
+text: "Você analisa o ambiente.\n\nEstruturas metálicas.\nMonitores.\n\nTudo parece... controlado.",
+choices: [
+  { text: "Examinar equipamentos", next: "data", type: "logica" },
+  { text: "Procurar saída", next: "exit", type: "instinto" }
+]
+},
+
+identity: {
+text: "Um vazio dentro de você.\n\nAlgo deveria estar aqui.\nMas não está.",
+choices: [
+  { text: "Forçar memórias", next: "memory", type: "emocao" },
+  { text: "Perguntar à voz", next: "ai", type: "logica" }
+]
+},
+
+silence: {
+text: "Você observa.\n\nO ambiente reage.\n\nComo se estivesse... sendo analisado.",
+choices: [
+  { text: "Continuar parado", next: "void", type: "instinto" },
+  { text: "Se mover lentamente", next: "lab", type: "instinto" }
+]
+},
+
+data: {
+text: "Dados piscam na tela:\n\nSUJEITO ATIVO\nMEMÓRIA: RESET\n\nVocê não é o primeiro.",
+choices: [
+  { text: "Investigar mais", next: "truth", type: "logica" },
+  { text: "Desligar sistema", next: "collapse", type: "instinto" }
+]
+},
+
+memory: {
+text: "Fragmentos surgem.\n\nUma voz.\nCorrida.\nMedo.\n\nNada faz sentido.",
+choices: [
+  { text: "Confiar nisso", next: "end", type: "emocao" },
+  { text: "Rejeitar tudo", next: "void", type: "instinto" }
+]
+},
+
+ai: {
+text: "“Você está em um experimento.”\n\n“Estamos testando identidade.”",
+choices: [
+  { text: "Aceitar", next: "end", type: "logica" },
+  { text: "Negar", next: "truth", type: "emocao" }
+]
+},
+
+exit: {
+text: "A porta se abre.\n\nDo outro lado...\n\nOutro você.",
+choices: [
+  { text: "Conversar", next: "end", type: "emocao" },
+  { text: "Atacar", next: "end", type: "instinto" }
+]
+},
+
+truth: {
+text: "“Você não é o original.”\n\n“Você é uma tentativa.”",
+choices: [
+  { text: "Então quem sou eu?", next: "end" },
+  { text: "Destruir tudo", next: "end", type: "instinto" }
+]
+},
+
+collapse: {
+text: "Sistema falhando...\n\nRealidade instável.",
+choices: [
+  { text: "Continuar", next: "end", type: "instinto" }
+]
+},
+
+void: {
+text: "Nada parece real.\n\nNem você.",
+choices: [
+  { text: "Aceitar o vazio", next: "end" },
+  { text: "Resistir", next: "truth" }
+]
+}
+
+};
+
+// DIGITAÇÃO + LIBERA BOTÕES DEPOIS
+function typeText(text, callback, i = 0) {
+  if (i < text.length) {
+    textEl.innerHTML += text.charAt(i);
+    setTimeout(() => typeText(text, callback, i + 1), 15);
+  } else {
+    callback();
+  }
+}
+
+// EFEITO GLITCH
+function glitchEffect() {
+  textEl.classList.add("glitch");
+  setTimeout(() => textEl.classList.remove("glitch"), 200);
+}
+
+// RESULTADO FINAL
+function showResult() {
+  textEl.innerHTML = "";
+  choicesEl.innerHTML = "";
+
+  let perfil, frase;
+
+  if (logica > emocao && logica > instinto) {
+    perfil = "ANALISTA";
+    frase = "Você busca padrões.\nTalvez você nunca tenha sido humano.";
+  } else if (emocao > logica && emocao > instinto) {
+    perfil = "SENSÍVEL";
+    frase = "Você sente.\nE isso é o que te define.";
+  } else if (instinto > logica && instinto > emocao) {
+    perfil = "SOBREVIVENTE";
+    frase = "Você age.\nE continua existindo.";
+  } else {
+    perfil = "ANOMALIA";
+    frase = "Você transcendeu o sistema.";
+  }
+
+  textEl.innerHTML =
+    "RESULTADO FINAL\n\n" +
+    "Lógica: " + logica + "\n" +
+    "Emoção: " + emocao + "\n" +
+    "Instinto: " + instinto + "\n\n" +
+    "Perfil: " + perfil + "\n\n" +
+    frase;
+
+  const btn = document.createElement("button");
+  btn.innerText = "Jogar Novamente";
+  btn.onclick = restartGame;
+  choicesEl.appendChild(btn);
+}
+
+// CARREGAR CENA
+function loadScene() {
+  if (scene === "end") {
+    glitchEffect();
+    setTimeout(showResult, 300);
+    return;
+  }
+
+  const data = scenes[scene];
+  textEl.innerHTML = "";
+  choicesEl.innerHTML = "";
+
+  document.getElementById("game").classList.add("fade");
+
+  typeText(data.text, () => {
+    data.choices.forEach(choice => {
+      const btn = document.createElement("button");
+      btn.innerText = choice.text;
+
+      btn.onclick = () => {
+        if (choice.type === "logica") logica++;
+        if (choice.type === "emocao") emocao++;
+        if (choice.type === "instinto") instinto++;
+
+        if (Math.random() < 0.2) glitchEffect();
+
+        scene = choice.next;
+        loadScene();
+      };
+
+      choicesEl.appendChild(btn);
+    });
+  });
+}
+
+// RESTART
+function restartGame() {
+  scene = "start";
+  logica = 0;
+  emocao = 0;
+  instinto = 0;
+  loadScene();
+}
+
+// INICIAR
+loadScene();
+</script>
+
+</body>
+</html>

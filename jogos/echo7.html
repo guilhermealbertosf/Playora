@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>ECO-7: O Loop da Consciência</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0d0d0d;
+      color: #e0e0e0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    a.botao-voltar{
+      text-decoration: none;
+      color: #00ffcc;
+      margin-right: -90%;
+    }
+    a.botao-voltar:hover{
+      background-color: #00ffcc1f;
+      padding: 5px;
+      border-radius: 10px;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 600px;
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #00ffcc33;
+      text-align: center;
+    }
+
+    h1 {
+      color: #00ffcc;
+    }
+
+    #texto {
+      margin: 20px 0;
+      min-height: 100px;
+    }
+
+    .botoes button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      background: #262626;
+      color: white;
+      border: 1px solid #00ffcc;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .botoes button:hover {
+      background: #00ffcc;
+      color: black;
+    }
+
+    .status {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #00ffcc;
+    }
+
+    #reiniciar {
+      margin-top: 15px;
+      padding: 8px;
+      display: none;
+      background: crimson;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    #reiniciar:hover {
+      background: red;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <a class="botao-voltar" href="../index.html">voltar</a>
+  <h1>ECO-7</h1>
+  <div id="texto"></div>
+  <div class="botoes" id="botoes"></div>
+  <div class="status" id="status"></div>
+  <button id="reiniciar" onclick="reiniciarJogo()">Reiniciar</button>
+</div>
+
+<script>
+  // =========================
+  // STATUS DO JOGADOR
+  // =========================
+  let estado = {
+    cenaAtual: 1,
+    hp: 100
+  };
+
+  // =========================
+  // CENAS DO JOGO
+  // =========================
+  const cenas = {
+
+    1: {
+      texto: "Você acorda em uma cápsula. Luzes vermelhas piscam. 'Falha no sistema ECO-7'.",
+      opcoes: [
+        { texto: "Verificar terminal", destino: 2 },
+        { texto: "Sair da sala", destino: 3 }
+      ]
+    },
+
+    2: {
+      texto: "O terminal mostra: 'Loop detectado'. Algo parece familiar.",
+      opcoes: [
+        { texto: "Acessar registros", destino: 4 },
+        { texto: "Reiniciar sistema", destino: 5, efeito: () => alterarHP(-10) }
+      ]
+    },
+
+    3: {
+      texto: "O corredor está escuro. Um som metálico ecoa.",
+      opcoes: [
+        { texto: "Seguir o som", destino: 6 },
+        { texto: "Entrar no laboratório", destino: 7 }
+      ]
+    },
+
+    4: {
+      texto: "Você vê vídeos seus repetindo as mesmas ações infinitamente.",
+      opcoes: [
+        { texto: "Forçar memória", destino: 8, efeito: () => alterarHP(-20) },
+        { texto: "Ignorar", destino: 3 }
+      ]
+    },
+
+    5: {
+      texto: "A IA fala: 'Você não deveria estar consciente'.",
+      opcoes: [
+        { texto: "Conversar com a IA", destino: 9 },
+        { texto: "Desligar IA", destino: 10, efeito: () => alterarHP(-15) }
+      ]
+    },
+
+    6: {
+      texto: "Um robô danificado repete: 'Você causou isso'.",
+      opcoes: [
+        { texto: "Consertar robô", destino: 8 },
+        { texto: "Destruir robô", destino: 11, efeito: () => alterarHP(-10) }
+      ]
+    },
+
+    7: {
+      texto: "Experimentos mostram seu nome como teste principal.",
+      opcoes: [
+        { texto: "Continuar experimento", destino: 9, efeito: () => alterarHP(-10) },
+        { texto: "Fugir", destino: 6 }
+      ]
+    },
+
+    8: {
+      texto: "Você lembra: criou o ECO-7, mas ele prendeu você no tempo.",
+      opcoes: [
+        { texto: "Destruir sistema", destino: 12 },
+        { texto: "Corrigir erro", destino: 9 }
+      ]
+    },
+
+    9: {
+      texto: "A IA diz: 'O loop salva a humanidade'.",
+      opcoes: [
+        { texto: "Aceitar loop", destino: 13 },
+        { texto: "Rejeitar", destino: 12 }
+      ]
+    },
+
+    10: {
+      texto: "Você desliga a IA. Tudo começa a colapsar.",
+      opcoes: [
+        { texto: "Reverter", destino: 9 },
+        { texto: "Aceitar fim", destino: 12 }
+      ]
+    },
+
+    11: {
+      texto: "O robô explode. 'Paradoxo detectado'.",
+      opcoes: [
+        { texto: "Ir ao laboratório", destino: 7 },
+        { texto: "Ir ao núcleo", destino: 9 }
+      ]
+    },
+
+    12: {
+      texto: "💀 Tudo colapsa... 'Reiniciando ciclo...'",
+      final: true
+    },
+
+    13: {
+      texto: "⚖️ Você aceita o loop... consciente para sempre.",
+      final: true
+    }
+
+  };
+
+  // =========================
+  // FUNÇÕES PRINCIPAIS
+  // =========================
+
+  function mostrarCena(id) {
+    estado.cenaAtual = id;
+    atualizarInterface();
+  }
+
+  function alterarHP(valor) {
+    estado.hp += valor;
+
+    if (estado.hp <= 0) {
+      estado.hp = 0;
+      alert("Você morreu!");
+      reiniciarJogo();
+    }
+  }
+
+  function atualizarInterface() {
+    const cena = cenas[estado.cenaAtual];
+
+    document.getElementById("texto").innerText = cena.texto;
+    document.getElementById("status").innerText = "HP: " + estado.hp;
+
+    const botoesDiv = document.getElementById("botoes");
+    botoesDiv.innerHTML = "";
+
+    if (cena.final) {
+      document.getElementById("reiniciar").style.display = "block";
+
+      setTimeout(() => {
+        mostrarCena(1);
+      }, 3000);
+
+      return;
+    }
+
+    document.getElementById("reiniciar").style.display = "none";
+
+    cena.opcoes.forEach(opcao => {
+      const botao = document.createElement("button");
+      botao.innerText = opcao.texto;
+
+      botao.onclick = () => {
+        if (opcao.efeito) opcao.efeito();
+        mostrarCena(opcao.destino);
+      };
+
+      botoesDiv.appendChild(botao);
+    });
+  }
+
+  function reiniciarJogo() {
+    estado.hp = 100;
+    mostrarCena(1);
+  }
+
+  // =========================
+  // INICIAR JOGO
+  // =========================
+  mostrarCena(1);
+
+</script>
+
+</body>
+</html>

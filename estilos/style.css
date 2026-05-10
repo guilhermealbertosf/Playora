@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Butcherman&display=swap');
+
+:root{
+    --cor0: #eaeaea;
+    --cor1: #222a23;
+    --cor2: #309462;
+    --cor3: #3626A7;
+    --cor4: #e848556b;
+
+    --fundo: #3626A7;
+    --cortitulo: var(--cor2);
+    --corsubtitulo: var(--cor1);
+    --corcorpo: #ffffff;
+    --subtitulo: #222a23;
+    --conteiner: #eaeaea00;
+    --caixa: var(--cor2);
+    --caixa-destaque: #e848556b;
+}
+
+*{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.butcherman-regular {
+  font-family: "Butcherman", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+body{
+    background-color: var(--fundo);
+}
+
+header{
+    text-align: center;
+}
+h1{
+    color: var(--cortitulo);
+    font: bold 40pt arial;
+    font-family: cursive, Arial, Helvetica, sans-serif;
+    height: 60vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+h2{
+    color: var(--corsubtitulo);
+    background-color: var(--corcorpo);
+    padding: 30px 0;
+        
+}
+main{
+    color: var(--corcorpo);
+}
+section#conteiner-jogos{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-items: start;    
+
+    background-color: var(--conteiner);
+    padding: 5px;
+}
+
+div.jogos{
+    width: 300px;
+    background-color: var(--caixa);
+    text-align: center;
+    margin: 0px 1px 20px 1px;
+    padding: 10px;
+    border-radius: 15px;
+}
+div.jogos:hover{
+    background-color: var(--caixa-destaque);
+    font-weight: bolder;
+    border-radius: 40px;
+    transition-duration: .8s;
+}
+div.jogos a{
+    text-decoration: none;
+    color: var(--corcorpo);
+}
+div.jogos img{
+    max-width: 100%;
+    border-radius: 20px;
+}

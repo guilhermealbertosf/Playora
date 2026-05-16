@@ -3,18 +3,18 @@
 :root{
     --cor0: #eaeaea;
     --cor1: #222a23;
-    --cor2: #309462;
+    --cor2: #b6b6b6;
     --cor3: #3626A7;
-    --cor4: #e848556b;
+    --cor4: #01A2EE;
 
-    --fundo: #3626A7;
+    --fundo: #28207bf3;
     --cortitulo: var(--cor2);
     --corsubtitulo: var(--cor1);
     --corcorpo: #ffffff;
     --subtitulo: #222a23;
     --conteiner: #eaeaea00;
-    --caixa: var(--cor2);
-    --caixa-destaque: #e848556b;
+    --caixa: #d9d9eb80;
+    --caixa-destaque: #F3189A;
 }
 
 *{
@@ -25,14 +25,9 @@
     scroll-behavior: smooth;
 }
 
-@keyframes piscar {
-    0% { background-color: #3622d3; }
-    50% { background-color: #3626A7; } /* Aumenta 10% no meio */
-    100% { background-color: #3523bd; }
-}
-
 html {
   scroll-behavior: smooth;
+
 }
 
 .butcherman-regular {
@@ -50,18 +45,39 @@ header{
     text-align: center;
 
 }
-#titulo{
+#logo{
     color: var(--cortitulo);
     font: bold 40pt arial;
     font-family: Arial, Helvetica, sans-serif;
-    height: 65vh;
+    height: 500px;
 
     display: flex;
     justify-content: center;
     align-items: center;
+    /*
     background: #000 url('../imagens/Logo.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: local;
+    */
+}
+#logo img{
+    width: 100%;
+    height: 100%;
+}
+
+@media screen and (min-width: 768px){
+    header{
+        background-color: #0E052C;
+    }
+    #logo img{
+        width: 50%;
+        height: 100%;
+    }
 
 }
+
 #subtitulo{
     color: var(--corsubtitulo);
     background-color: var(--corcorpo);
@@ -95,17 +111,19 @@ section#conteiner-jogos{
     justify-content: space-evenly;
     align-items: start;    
 
-    padding: 5px;
+    padding: 20px 5px;
     background-color: var(--conteiner);
 }
 
 div.jogos{
     width: 300px;
+    height: 300px;
     background-color: var(--caixa);
     text-align: center;
-    margin: 0px 1px 20px 1px;
-    padding: 10px;
+    margin: 0px 10px 20px 1px;
+    padding: 0px;
     border-radius: 15px;
+    border: 1px solid #ffffff;
 }
 div.jogos:hover{
     background-color: var(--caixa-destaque);
@@ -120,15 +138,16 @@ div.jogos a{
     color: var(--corcorpo);
 }
 div.jogos img{
-    max-width: 100%;
-    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+    border-radius: 2px;
 }
 
 
 .botao-voltar-inicio{
     display: block;
     width: 200px;
-    background-color: var(--caixa-destaque);
+    background-color: #79e53b81;
     color: #eaeaea;
     text-align: center;
     margin: auto;
@@ -138,6 +157,7 @@ div.jogos img{
 .botao-voltar-inicio:hover{
     font-size: 16pt;
     transition-duration: 2s;
+    background-color: var(--cor4);
 }
 
 
